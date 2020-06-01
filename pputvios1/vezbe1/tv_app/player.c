@@ -1,4 +1,6 @@
 #include "player.h"
+#include "parser.h"
+
 
 static inline void textColor(int32_t attr, int32_t fg, int32_t bg)
 {
@@ -26,14 +28,8 @@ int32_t tunerStatusCallback(t_LockStatus status)
     return 0;
 }
 
-void tunerUp(){
-    int32_t result;
-    uint32_t playerHandle = 0;
-    uint32_t sourceHandle = 0;
-    uint32_t filterHandle = 0;
-    uint32_t streamHandleAudio = 0;
-    uint32_t streamHandleVideo = 0;
-    
+int32_t initializePlayer(){
+   
     
     struct timespec lockStatusWaitTime;
     struct timeval now;
@@ -57,14 +53,17 @@ void tunerUp(){
     if(ETIMEDOUT == pthread_cond_timedwait(&statusCondition, &statusMutex, &lockStatusWaitTime))
     {
         printf("\n\nLock timeout exceeded!\n\n");
-        return -1;
+       // return -1;
     }
     pthread_mutex_unlock(&statusMutex);
     
     /* Initialize player (demux is a part of player) */
     result = Player_Init(&playerHandle);
     ASSERT_TDP_RESULT(result, "Player_Init");
-    
+}
+
+int32_t streamAV(){
+  
     /* Open source (open data flow between tuner and demux) */
     result = Player_Source_Open(playerHandle, &sourceHandle);
     ASSERT_TDP_RESULT(result, "Player_Source_Open");
@@ -73,22 +72,23 @@ void tunerUp(){
     result = Player_Stream_Create(playerHandle, sourceHandle, 101, VIDEO_TYPE_MPEG2, &streamHandleVideo);
     ASSERT_TDP_RESULT(result, "Player_Stream_Create");
     printf("i am here2");
-   /* Open stream audio  */
+    /* Open stream audio  */
     result = Player_Stream_Create(playerHandle, sourceHandle, 103, AUDIO_TYPE_MPEG_AUDIO, &streamHandleAudio);
-   ASSERT_TDP_RESULT(result, "Player_Stream_Create");
-     printf("i am here3");
+    ASSERT_TDP_RESULT(result, "Player_Stream_Create");
+    printf("i am here3");
     /* Set filter to demux */
     result = Demux_Set_Filter(playerHandle, 0x0000, 0x00, &filterHandle);
     ASSERT_TDP_RESULT(result, "Demux_Set_Filter");
-    
     /* Register section filter callback */
-    result = Demux_Register_Section_Filter_Callback(mySecFilterCallback);
+    result = Demux_Register_Section_Filter_Callback(table_parser_PAT);
     ASSERT_TDP_RESULT(result, "Demux_Register_Section_Filter_Callback");
-    
     /* Wait for a while to receive several PAT sections */
     fflush(stdin);
     getchar();
-    
+
+}
+
+int32_t deinitializePlayer(){
     /* Deinitialization */
     
     /* Free demux filter */

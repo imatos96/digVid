@@ -21,8 +21,8 @@ DFBSurfaceDescription surfaceDesc;
 
 void inbetweenFunc();
 void initialize();
-void stringDraw(char[2000] buffer);
-void drawImage(char[100] imagePath);
+int32_t stringDraw(char buffer[2000]);
+int32_t drawImage(char imagePath[100]);
 void cleanup();
 
 #endif

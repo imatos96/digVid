@@ -24,10 +24,18 @@
                                     return -1; \
                                 }
 
-
-static pthread_cond_t statusCondition = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t statusMutex = PTHREAD_MUTEX_INITIALIZER;
+int32_t result;
+uint32_t playerHandle = 0;
+uint32_t sourceHandle = 0;
+uint32_t filterHandle = 0;
+uint32_t streamHandleAudio = 0;
+uint32_t streamHandleVideo = 0;
 
 static int32_t tunerStatusCallback(t_LockStatus status);
+
+int32_t initializePlayer();
+int32_t streamAV();
+int32_t deinitializePlayer();
+
 
 #endif

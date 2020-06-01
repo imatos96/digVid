@@ -36,11 +36,11 @@ CXXFLAGS = $(CFLAGS)
 all: clean tv_app
 
 SRCS =  ./main.c
-SRCS += ./config.c
+#SRCS += ./config.c
 SRCS += ./player.c
 SRCS += ./parser.c
 SRCS += ./remote.c
-SRCS += ./graphics.c
+SRCS += ./graph.c
 
 tv_app:
 	$(CC) -o tv_app $(INCS) $(SRCS) $(CFLAGS) $(LIBS)

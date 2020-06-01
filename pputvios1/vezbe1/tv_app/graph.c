@@ -31,7 +31,7 @@ void inbetweenFunc() {
 
 }
 
-void initialize(){
+void initialize(int32_t argc, char** argv){
         /* initialize DirectFB */
 	DFBCHECK(DirectFBInit(&argc, &argv));
     	/* fetch the DirectFB interface */
@@ -47,7 +47,7 @@ void initialize(){
 
 }
 
-void stringDraw(char[2000] buffer){
+int32_t stringDraw(char buffer[2000]){
        /* fetch the screen size */ 
        DFBCHECK (primary->GetSize(primary, &screenWidth, &screenHeight));	
 
@@ -56,7 +56,7 @@ void stringDraw(char[2000] buffer){
                /*red*/ 0x00,
                /*green*/ 0x00,
                /*blue*/ 0x00,
-               /*alpha*/ 0x00);
+               /*alpha*/ 0x00));
 
        DFBCHECK(primary->FillRectangle(/*surface to draw on*/ primary,
               /*upper left x coordinate*/ 0,
@@ -97,10 +97,11 @@ void stringDraw(char[2000] buffer){
               /*region to be updated, NULL for the whole surface*/NULL,
               /*flip flags*/0));
 
-        }
+        
+	return 0;
 }
 
-void drawImage(char[100] imagePath){
+int32_t drawImage(char imagePath[100]){
 
       /* draw image from file */
     
@@ -119,7 +120,8 @@ void drawImage(char[100] imagePath){
 	
      /* cleanup the provider after rendering the image to the surface */
        provider->Release(provider);
-	
+       
+       return 0;
 }
 
 void cleanup(){

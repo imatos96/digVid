@@ -45,5 +45,12 @@ struct PMT_HEADER{
 struct PAT_HEADER pmt_header;
 struct PAT_HEADER pat_header;
 
+
+int32_t myPrivateTunerStatusCallback(t_LockStatus status);
+int32_t mySecFilterCallback(uint8_t *buffer);
+pthread_cond_t statusCondition = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t statusMutex = PTHREAD_MUTEX_INITIALIZER;
+
+int32_t myPrivateTunerStatusCallback(t_LockStatus status);
 int32_t table_parser_PAT(uint8_t *buffer);
-int32_t table_parser_PMT(uint8_t *buffer);
+//int32_t table_parser_PMT(uint8_t *buffer);

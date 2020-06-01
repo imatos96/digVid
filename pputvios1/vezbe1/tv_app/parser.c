@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include "errno.h"
 #include "tdp_api.h"
-#include "table.h"
+#include "parser.h"
 
 int32_t table_parser_PAT(uint8_t *buffer)
 {
@@ -54,6 +54,23 @@ int32_t table_parser_PAT(uint8_t *buffer)
     return 0;
 }
 
+int32_t myPrivateTunerStatusCallback(t_LockStatus status)
+{
+    if(status == STATUS_LOCKED)
+    {
+        pthread_mutex_lock(&statusMutex);
+        pthread_cond_signal(&statusCondition);
+        pthread_mutex_unlock(&statusMutex);
+        printf("\n\n\tCALLBACK LOCKED\n\n");
+    }
+    else
+    {
+        printf("\n\n\tCALLBACK NOT LOCKED\n\n");
+    }
+    return 0;
+}
+
+/*
 int32_t table_parser_PMT(uint8_t *buffer) {
 	uint8_t *section_data = pmt->section_header->data;
 	int section_len = pmt->section_header->data_len;
@@ -65,7 +82,7 @@ int32_t table_parser_PMT(uint8_t *buffer) {
 	pmt->program_info_size = ((section_data[2] &~ 0xF0) << 8) | section_data[3];	// 1111xxxx xxxxxxxx
 
 	/* Handle streams */
-	uint8_t *stream_data = section_data + 4 + pmt->program_info_size;	// +4 is to compensate for reserved1,PCR,reserved2,program_info_size
+	/*uint8_t *stream_data = section_data + 4 + pmt->program_info_size;	// +4 is to compensate for reserved1,PCR,reserved2,program_info_size
 	int stream_len       = section_len - pmt->program_info_size - 4;		// -4 for the CRC at the end
 
 	pmt->program_info = NULL;
@@ -109,4 +126,4 @@ int32_t table_parser_PMT(uint8_t *buffer) {
 
 	pmt->initialized = 1;
 	return 1;
-}
+}*/

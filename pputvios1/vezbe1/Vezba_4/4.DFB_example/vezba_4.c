@@ -250,7 +250,7 @@ void *pthreadRemoteCntrl()
 		/* fetch the screen size */
 		DFBCHECK (primary->GetSize(primary, &screenWidth, &screenHeight));	
 
-	/* clear the screen before drawing anything (draw black full screen rectangle)*/
+	       /* clear the screen before drawing anything (draw black full screen rectangle)*/
 		DFBCHECK(primary->SetColor(/*surface to draw on*/ primary,
                /*red*/ 0x00,
                /*green*/ 0xf0,

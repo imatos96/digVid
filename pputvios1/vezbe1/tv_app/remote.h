@@ -1,5 +1,5 @@
 #ifndef _REMOTE_H_
-#define _REMOTE_H
+#define _REMOTE_H_
 
 
 #include <stdio.h>
@@ -24,3 +24,5 @@ static int32_t inputFileDesc;
 
 int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventRead);
 void *pthreadRemoteCntrl();
+
+#endif

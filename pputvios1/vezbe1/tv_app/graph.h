@@ -1,3 +1,5 @@
+#ifndef _GRAPH_H_
+#define _GRAPH_H_
 #include <stdio.h>
 #include <directfb.h>
 #include <stdint.h>
@@ -17,8 +19,10 @@ static int screenWidth = 0;
 static int screenHeight = 0;
 DFBSurfaceDescription surfaceDesc;
 
-timer_t timerId;
-struct sigevent signalEvent;     
-struct itimerspec timerSpec;
-struct itimerspec timerSpecOld;
-int32_t timerFlags = 0;
+void inbetweenFunc();
+void initialize();
+void stringDraw(char[2000] buffer);
+void drawImage(char[100] imagePath);
+void cleanup();
+
+#endif

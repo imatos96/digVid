@@ -1,14 +1,10 @@
-<initial_config>
- <transporder>
-   <frequency>818000000</frequency>
-   <bandwith>8</bandwidth>
-   <module>DVB-T</module>
- </transporder>
- <starting_channel>
-   <audio_pid>101</audio_pid>
-   <video_pid>103</video_pid>
-   <audio_type>ac3</audio_type>
-   <video_type>mpeg2</video_type>
- </starting_channel>
-</initial_config>
+[dvb-t]
+frequency=818
+bandwidth=8
+module=DVB-T
 
+[initial_channel]
+aPID=101
+vPID=103
+aType=ac3
+vType=mpeg2

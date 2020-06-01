@@ -1,11 +1,3 @@
-#include <stdio.h>
-#include <linux/input.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <errno.h>
-#include <pthread.h>
 #include "remote.h"
 #include "graph.h"
 
@@ -76,8 +68,6 @@ void *pthreadRemoteCntrl()
 		}
 		else volume=100;
 		printf("Volume: %d\n",volume); //ispisuje se 2 puta kada pustim gumb i stisnem
-		
-		
             }
             if(eventBuf[i].code==64 && (eventBuf[i].value == 1 || eventBuf[i].value == 2))
 	    {
@@ -87,8 +77,11 @@ void *pthreadRemoteCntrl()
 		else volume=0;
 		printf("Volume: %d\n",volume); //ispisuje se 2 puta kada pustim gumb i stisnem
             }
-	  
-        } 
+	   if(eventBuf[i].value == 1)
+	   {
+		sprintf(buffer, "KeyCode: %u", eventBuf[i].code);
+		stringDraw(buffer);
+           } 
 
 	
     }
